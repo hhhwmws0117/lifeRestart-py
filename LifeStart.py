@@ -64,26 +64,37 @@ def run():
 
     return life.run()
 
-while True:
-    i = 0
-    for x in run():
-        print(f'\n{x[0]}{"——".join(x[1:])}',end='',flush=True)
-        if(0 < i):
-            i-=1
-            continue
-        if(msvcrt.getch() == b' '):
-            i = 9
-    print(f"\n\n【第{life.property.TMS}轮结束】你可以从本轮天赋中选择一项继承到下一轮：\n0 放弃继承")
-    print('\n'.join([f"{i+1}.{t}" for i,t in enumerate(life.talent.talents)]))
+import sys
 
-    c = input("请输入希望继承的天赋序号（默认选择1）：")
-    if c == 0:
-        print('没有继承任何天赋……')
-        life.restart()
+def main():
+  while True:
+    i = 0 
+    for x in run():
+      print(f'\n{x[0]}{"——".join(x[1:])}', end='', flush=True)
+      if(0 < i):  
+        i -= 1
+        continue
+      char = sys.stdin.read(1)
+      if char == b' ':  
+        i = 9
+      
+    print(f"\\n\\n【第{life.property.TMS}轮结束】你可以从本轮天赋中选择一项继承到下一轮:\\n0 放弃继承")
+    
+    print('\\n'.join([f"{i+1}.{t}" for i, t in enumerate(life.talent.talents)]))
+    
+    c = input("请输入希望继承的天赋序号(默认选择1):")
+    if c == '0':
+      print('没有继承任何天赋......')
+      life.restart()
+      
     inherit = 1
     try:
-        inherit = int(c)
+      inherit = int(c)
     except:
-        pass
-    print(f'你的选择是：{inherit}')
+      pass
+      
+    print(f'你的选择是:{inherit}') 
     life.restart(inherit)
+
+if __name__ == '__main__':
+  main()
