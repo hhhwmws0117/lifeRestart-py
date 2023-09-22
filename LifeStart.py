@@ -1,6 +1,6 @@
 import random
 import traceback
-import msvcrt
+import sys
 
 from Life import Life,HandlerException
 
